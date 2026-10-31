@@ -64,6 +64,9 @@ class CalibreMetadata(ComicMetadata):
         self._update_field("pageCount", field(prefs['pages_column']))
         self._update_field("webLink", get_link(field(prefs['comicvine_column'])))
         self._update_field("manga", field(prefs['manga_column']))
+        # right-to-left reading direction from a source epub (OPF spine)
+        if self.book.source_epub_is_rtl():
+            self._update_field("manga", "YesAndRightToLeft")
         self._update_field("format", field(prefs['format_column']))
         self._update_field("maturityRating", field(prefs['maturity_column']))
 

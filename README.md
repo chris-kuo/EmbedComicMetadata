@@ -14,6 +14,7 @@ Requires calibre version 1.0.0 or later.
 - Can embed the calibre cover into cbz comics (experimental)
 - Can count the number of pages (image files) in a comic
 - Can get the size of the images in the comic file
+- Writes `<Manga>YesAndRightToLeft</Manga>` to ComicInfo.xml when the same book also has an EPUB format whose OPF spine has `page-progression-direction="rtl"`
 
 ## Usage
 
