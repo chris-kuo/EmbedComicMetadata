@@ -16,6 +16,7 @@ from calibre_plugins.EmbedComicMetadata.metadata.CalibreMetadata import CalibreM
 from calibre_plugins.EmbedComicMetadata.metadata.ComicinfoXMLMetadata import ComicinfoXMLMetadata
 from calibre_plugins.EmbedComicMetadata.metadata.ComicbookinfoMetadata import ComicbookinfoMetadata
 from calibre_plugins.EmbedComicMetadata.utils import add_dir_to_zipfile
+from calibre_plugins.EmbedComicMetadata.epubinfo import epub_is_rtl
 
 import sys
 
@@ -70,6 +71,19 @@ class Comicbook:
             self._file = self.db.format(self.book_id, self.format, as_path=True)
         return self._file
     
+    def source_epub_is_rtl(self):
+        '''
+        True if this book also has an epub format whose OPF spine declares
+        page-progression-direction="rtl".
+        '''
+        if not self.db.has_format(self.book_id, "epub"):
+            return False
+        epub_path = self.db.format(self.book_id, "epub", as_path=True)
+        try:
+            return epub_is_rtl(epub_path)
+        finally:
+            delete_temp_file(epub_path)
+
     def cleanup(self):
         if self.file_dirty:
             self.db.add_format(self.book_id, self.format, self._file)
